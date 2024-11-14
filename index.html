@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,6 +76,9 @@
       document.getElementById(`${id}-name`).innerText = pokemon.name.toUpperCase();
       document.getElementById(`${id}-img`).src = pokemon.sprites.front_default;
       document.getElementById(id).dataset.name = pokemon.name;
+      // Store the current Pokémon details in localStorage
+      localStorage.setItem(`${id}-name`, pokemon.name);
+      localStorage.setItem(`${id}-img`, pokemon.sprites.front_default);
     }
 
     async function displayRandomPokemons() {
@@ -137,8 +141,23 @@
     }
 
     // Initialize with random Pokémon and update table
-    displayRandomPokemons();
-    updateResultsTable();
+    window.onload = function() {
+      if (localStorage.getItem('pokemon1-name')) {
+        document.getElementById('pokemon1-name').innerText = localStorage.getItem('pokemon1-name').toUpperCase();
+        document.getElementById('pokemon1-img').src = localStorage.getItem('pokemon1-img');
+        document.getElementById('pokemon1').dataset.name = localStorage.getItem('pokemon1-name');
+      } else {
+        fetchRandomPokemon('pokemon1');
+      }
+      if (localStorage.getItem('pokemon2-name')) {
+        document.getElementById('pokemon2-name').innerText = localStorage.getItem('pokemon2-name').toUpperCase();
+        document.getElementById('pokemon2-img').src = localStorage.getItem('pokemon2-img');
+        document.getElementById('pokemon2').dataset.name = localStorage.getItem('pokemon2-name');
+      } else {
+        fetchRandomPokemon('pokemon2');
+      }
+      updateResultsTable();
+    };
   </script>
 </body>
 </html>
